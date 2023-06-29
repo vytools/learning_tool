@@ -5,11 +5,15 @@ import { link_user, update_assignment, update_submission, remove_assignment } fr
 import { get_students } from './canvas_api.js';
 
 // For canvas api (shouldn't need for lti!)
-let GRVT = {lti:{
-  token:'create an access token in canvas to go here...',
-  url:'canvas.instructure.com',
-  course_id:'get the course id...'
-}};
+let GRVT = {};
+if (process.env.CANVAS_API_TOKEN) {
+  console.log('Using the canvas REST api!')
+  GRVT.lti = {
+    token:process.env.CANVAS_API_TOKEN,
+    url:process.env.CANVAS_URL,
+    course_id:process.env.CANVAS_COURSE_ID
+  };
+}
 
 // Make some fake users
 await Meteor.users.deleteMany({});
@@ -126,7 +130,7 @@ async function rmva(name) {
 const app = express();
 
 async function launch(req, res){
-  console.log(req.query, req.body, req.headers)
+  // console.log(req.query, req.body, req.headers)
   if (req.query.add_assignment) {
     await adda()
   } else if (req.query.modify_submission) {
@@ -152,6 +156,7 @@ async function launch(req, res){
 
 app.post('/launch', launch);
 app.get('/launch', launch);
+app.get('/', launch);
 
 app.get('/config', function(req, res) {
   let url = 'https://' + req.get('host');

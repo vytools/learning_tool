@@ -6,7 +6,7 @@ const client = new MongoClient(url);
 const dbName = 'myProject';
 
 await client.connect();
-console.log('Connected successfully to server');
+console.log('Connected successfully to mongodb');
 const db = client.db(dbName);
 export const Boxes = db.collection('Boxes');
 export const Groups = db.collection('Groups');
@@ -18,13 +18,15 @@ export const Meteor = {
 
 export const parse_links = function(links) {
     let r = {};
-    links.split(',').forEach(link => {
-        let ls = link.split(';');
-        if (ls.length == 2) {
-            let typ = ls[1].replace('rel="','').replace('"','').trim();
-            r[typ] = ls[0].trim().replace('<','').replace('>','');
-        }
-    });
+    if (links) {
+        links.split(',').forEach(link => {
+            let ls = link.split(';');
+            if (ls.length == 2) {
+                let typ = ls[1].replace('rel="','').replace('"','').trim();
+                r[typ] = ls[0].trim().replace('<','').replace('>','');
+            }
+        });
+    }
     return r;
 }
 

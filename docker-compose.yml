@@ -6,11 +6,16 @@ services:
     - 27017
     network_mode: 'host'
   server:
-    image: node:20-alpine
-    working_dir: /usr/app
+    build:
+      context: .
     command: npm start
     network_mode: 'host'
+    environment:
+      IGNORE: '?'
+      # CANVAS_API_TOKEN: 'put the token here'
+      # CANVAS_URL: 'put the url here'
+      # CANVAS_COURSE_ID: 'put the course id here'
     volumes:
-      - .:/usr/app:rw
+      - ./src:/usr/app/src:rw
 
 version: '3.6'
