@@ -1,0 +1,16 @@
+services:
+  mongo:
+    image: mongo:4.0
+    restart: always
+    expose:
+    - 27017
+    network_mode: 'host'
+  server:
+    image: node:20-alpine
+    working_dir: /usr/app
+    command: npm start
+    network_mode: 'host'
+    volumes:
+      - .:/usr/app:rw
+
+version: '3.6'
