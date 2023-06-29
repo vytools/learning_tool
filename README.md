@@ -19,7 +19,9 @@ tools.js -> just some utilities and tools used by the other files
 I want this to work with other LMS's besides canvas but for now canvas is the main focus (https://canvas.instructure.com/doc/api/file.tools_intro.html). If it goes well we can move to other lms's
 
 To run the app:
+
 docker-compose build
+
 docker-compose up
 
 If you change the package.json file, re-reun docker-compose build
